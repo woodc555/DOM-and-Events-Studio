@@ -14,6 +14,10 @@ function init (){
     const spaceShuttleHeight = document.getElementById("spaceShuttleHeight");
     const rocket = document.getElementById("rocket");
 
+    let height = 0;
+    let vertical = 240;
+    let horizontal = 0;
+
     
         //loaded
         console.log("window loaded");
@@ -24,7 +28,7 @@ function init (){
             if (takeOffResponse == true){
                 flightStatus.innerHTML = 'Shuttle in Flight.';
                 shuttleBackgorund.style.backgroundColor = "Blue";
-                spaceShuttleHeight.value = 10000;
+                spaceShuttleHeight.innerHTML = "10000";
             };
         });
 
@@ -34,6 +38,10 @@ function init (){
             flightStatus.innerHTML = "The shuttle has landed.";
             shuttleBackgorund.style.backgroundColor = "Green";
             spaceShuttleHeight.innerHTML = "0";
+            vertical = 240;
+            horizontal = 0;
+            rocket.style.top = vertical + "px";
+            rocket.style.left = horizontal + "px";
         });
 
         //abort button
@@ -43,24 +51,54 @@ function init (){
                 flightStatus.innerHTML = "Mission aborted";
                 shuttleBackgorund.style.backgroundColor = "Green";
                 spaceShuttleHeight.innerHTML = "0";
+                vertical = 240;
+                horizontal = 0;
+                rocket.style.top = vertical + "px";
+                rocket.style.left = horizontal + "px";
             };
         });
 
         //move rocket
+        rocket.style.position = "absolute";
+        rocket.style.left = "0px";
+        rocket.style.top = "240px";
+
         up.addEventListener('click', function(){
+            height += 10000;
+            spaceShuttleHeight.innerHTML = height;
+            
+            if (vertical > 0) {
+                vertical -= 10;
+                rocket.style.top = vertical + "px";
+            };
+        });
+        
+        down.addEventListener('click', function(){
+            if (height > 0) {
+                height -= 10000;
+            };
+            spaceShuttleHeight.innerHTML = height;
+            if (vertical < 240) {
+                vertical += 10;
+                rocket.style.top = vertical + "px";
+            };
             
         });
 
-        down.addEventListener('click', function(){
-
-        });
-
         right.addEventListener('click', function(){
-
+            if (horizontal < 360) {
+                horizontal += 10;
+                rocket.style.left = horizontal + "px";
+            };
+            
         });
-
+        
         left.addEventListener('click', function(){
-
+            if (horizontal > -10){
+                horizontal -= 10;
+                rocket.style.left = horizontal + "px";
+            };
+            
         });
     
 };
